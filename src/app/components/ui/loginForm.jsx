@@ -62,9 +62,10 @@ const LoginForm = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
+
         try {
             await signIn(data);
-            history.push("/");
+            history.push(history.location.state.from.pathname || "/");
         } catch (error) {
             setErrors(error);
         }

@@ -1,28 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import api from "../../../api";
 import UserCard from "../../ui/userCard";
 import QualitiesCard from "../../ui/qualitiesCard";
 import MeetingsCard from "../../ui/meetingsCard";
 import Comments from "../../ui/comments";
+import { useUser } from "./../../../hooks/useUsers";
+import { useAuth } from "./../../../hooks/useAuth";
+import { CommentsProvider } from "../../../hooks/useComments";
 
 const UserPage = ({ userId }) => {
-    const [user, setUser] = useState();
+    const user = useUser().getUserById(userId);
+    const { currentUser } = useAuth();
+    const newUser = user._id === currentUser._id ? currentUser : user;
 
-    useEffect(() => {
-        api.users.getById(userId).then((data) => setUser(data));
-    }, []);
-    if (user) {
+    if (newUser) {
         return (
             <div className="container">
                 <div className="row gutters-sm">
                     <div className="col-md-4 mb-3">
-                        <UserCard user={user} />
-                        <QualitiesCard data={user.qualities} />
-                        <MeetingsCard value={user.completedMeetings} />
+                        <UserCard user={newUser} />
+                        <QualitiesCard data={newUser.qualities} />
+                        <MeetingsCard value={newUser.completedMeetings} />
                     </div>
                     <div className="col-md-8">
-                        <Comments />
+                        <CommentsProvider>
+                            <Comments />
+                        </CommentsProvider>
                     </div>
                 </div>
             </div>
