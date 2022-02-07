@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import CheckBoxField from "../common/form/checkBoxField";
 import { useHistory } from "react-router-dom";
-import { logIn } from "./../../store/users";
+import { getAuthErrors, logIn } from "./../../store/users";
 
 const LoginForm = () => {
     const history = useHistory();
@@ -15,6 +15,7 @@ const LoginForm = () => {
         stayOn: false
     });
     const [errors, setErrors] = useState({});
+    const loginError = useSelector(getAuthErrors());
 
     const handleChange = (target) => {
         setData((prevState) => ({
@@ -63,7 +64,9 @@ const LoginForm = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        const redirect = history.location.state ? history.location.state.from.pathname : "/";
+        const redirect = history.location.state
+            ? history.location.state.from.pathname
+            : "/";
         dispatch(logIn(data, redirect));
     };
     return (
@@ -90,6 +93,7 @@ const LoginForm = () => {
             >
                 Оставаться в системе
             </CheckBoxField>
+            {loginError && <p className="text-danger">{loginError}</p>}
             <button
                 type="submit"
                 disabled={!isValid}
