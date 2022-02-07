@@ -31,7 +31,9 @@ export function getTokenExpiresDate() {
 export function getCurrentUser() {
     return localStorage.getItem(USERID_KEY);
 }
-
+export function getUserId() {
+    return localStorage.getItem(USERID_KEY);
+}
 export function removeAuthData() {
     localStorage.removeItem(USERID_KEY);
     localStorage.removeItem(TOKEN_KEY);
@@ -45,6 +47,7 @@ export const localStorageService = {
     getRefreshToken,
     getTokenExpiresDate,
     getCurrentUser,
+    getUserId,
     removeAuthData
 };
 
