@@ -8,7 +8,7 @@ import NavBar from "./components/ui/navBar";
 import { ToastContainer } from "react-toastify";
 // import { ProfessionProvider } from "./hooks/useProfession";
 // import { QualitiesProvider } from "./hooks/useQualities";
-import AuthProvider from "./hooks/useAuth";
+// import AuthProvider from "./hooks/useAuth";
 import ProtectedRoute from "./components/common/protectedRoute";
 import LogOut from "./layouts/logOut";
 import AppLoader from "./components/ui/hoc/appLoader";
@@ -17,7 +17,7 @@ function App() {
     return (
         <div>
             <AppLoader>
-                <AuthProvider>
+                {/* <AuthProvider> */}
                     <NavBar />
 
                     {/* <QualitiesProvider> */}
@@ -34,7 +34,7 @@ function App() {
                     </Switch>
                     {/* </ProfessionProvider> */}
                     {/* </QualitiesProvider> */}
-                </AuthProvider>
+                {/* </AuthProvider> */}
             </AppLoader>
             <ToastContainer />
         </div>
